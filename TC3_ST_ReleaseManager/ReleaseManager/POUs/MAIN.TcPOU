@@ -5,6 +5,7 @@
 VAR
 	fbTestModule1 : TestModule_1;
 	fbTestModule2 : TestModule_2;
+	fbTestModule3,fbTestModule4,fbTestModule5 : TestModule_3;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -14,7 +15,9 @@ fbTestModule2();
 //fbTestModule1.fbNextStationReleaseClient.bReleasePresent := fbTestModule2.fbNextStationReleaseMaster.bSetRelease;
 //fbTestModule2.fbNextStationReleaseMaster.bReleaseAckIn := fbTestModule1.fbNextStationReleaseClient.bReleaseAckOut;
 
-fbTestModule2.fbNextStationReleaseMaster.SetReleaseClient(fbTestModule1.fbNextStationReleaseClient);]]></ST>
+fbTestModule2.fbNextStationReleaseMaster.SetReleaseClient(fbTestModule1.fbNextStationReleaseClient);
+fbTestModule3.fbNextStationReleaseHybrid.SetReleaseClient(fbTestModule4.fbNextStationReleaseHybrid);
+fbTestModule4.fbNextStationReleaseHybrid.SetReleaseClient(fbTestModule5.fbNextStationReleaseHybrid);]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
       <LineId Id="2" Count="0" />
@@ -24,6 +27,7 @@ fbTestModule2.fbNextStationReleaseMaster.SetReleaseClient(fbTestModule1.fbNextSt
       <LineId Id="12" Count="0" />
       <LineId Id="14" Count="0" />
       <LineId Id="13" Count="0" />
+      <LineId Id="16" Count="1" />
     </LineIds>
   </POU>
 </TcPlcObject>

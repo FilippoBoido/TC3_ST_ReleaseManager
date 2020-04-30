@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
+  <POU Name="ReleaseHybrid" Id="{62898187-7173-4114-9b9e-eba6cc928c84}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ReleaseHybrid EXTENDS ReleaseClient
+VAR_INPUT
+	bReleaseAckIn : BOOL;
+END_VAR
+
+VAR_OUTPUT
+	bSetRelease : BOOL;
+	bLastHandshakeSuccesfulHybrid : BOOL;
+END_VAR
+
+
+VAR
+	fbReleaseAckInEvent : R_TRIG;
+	fbSetReleaseEvent : R_TRIG;
+	fbHandshakeSuccessfulEvent : R_TRIG;
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SUPER^();
+fbReleaseAckInEvent(CLK:=bReleaseAckIn);
+fbSetReleaseEvent(CLK:=bSetRelease);
+
+IF fbReleaseAckInEvent.Q
+THEN
+	OnReleaseAckIn();
+END_IF
+
+IF fbSetReleaseEvent.Q
+THEN
+	OnSetRelease();
+END_IF
+
+IF fbHandshakeSuccessfulEvent.Q
+THEN	
+	bLastHandshakeSuccesful := TRUE;
+END_IF
+	]]></ST>
+    </Implementation>
+    <Method Name="OnHandshakeSuccessful" Id="{fd2496f1-8f28-4daf-a0ff-c614084e1ab2}">
+      <Declaration><![CDATA[METHOD OnHandshakeSuccessful : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnReleaseAckIn" Id="{bb7d6fda-b411-4a9f-9372-3c3c6858cebf}">
+      <Declaration><![CDATA[METHOD OnReleaseAckIn : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[bSetRelease := FALSE;
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnSetRelease" Id="{a962a124-aa8b-4ae0-be8d-d442d919b401}">
+      <Declaration><![CDATA[METHOD OnSetRelease : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[bLastHandshakeSuccesfulHybrid := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetReleaseClient" Id="{412d4f81-e219-4209-895c-285c49672eb8}">
+      <Declaration><![CDATA[METHOD SetReleaseClient : BOOL
+VAR_IN_OUT
+	fbReleaseClient : ReleaseClient;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[bReleaseAckIn := fbReleaseClient.bReleaseAckOut;
+fbReleaseClient.bReleasePresent := bSetRelease;
+
+fbHandshakeSuccessfulEvent(CLK:=fbReleaseClient.bLastHandshakeSuccesful);
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="ReleaseHybrid">
+      <LineId Id="42" Count="0" />
+      <LineId Id="10" Count="16" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="ReleaseHybrid.OnHandshakeSuccessful">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="ReleaseHybrid.OnReleaseAckIn">
+      <LineId Id="8" Count="1" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="ReleaseHybrid.OnSetRelease">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="ReleaseHybrid.SetReleaseClient">
+      <LineId Id="8" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

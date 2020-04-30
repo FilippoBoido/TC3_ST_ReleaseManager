@@ -26,6 +26,9 @@
     <Compile Include="POUs\ReleaseClient.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\ReleaseHybrid.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\ReleaseMaster.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -33,6 +36,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\TestModule_2.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\TestModule_3.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
