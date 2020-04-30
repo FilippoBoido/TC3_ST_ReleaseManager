@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
+  <POU Name="TestModule_2" Id="{a7b992a4-5e40-4c2d-878b-802603a9aeaa}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK TestModule_2
+VAR_INPUT
+	fbNextStationReleaseMaster : ReleaseMaster;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbNextStationReleaseMaster();]]></ST>
+    </Implementation>
+    <LineIds Name="TestModule_2">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

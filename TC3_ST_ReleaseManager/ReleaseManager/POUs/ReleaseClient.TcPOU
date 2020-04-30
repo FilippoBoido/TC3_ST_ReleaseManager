@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
+  <POU Name="ReleaseClient" Id="{a80f320d-5687-4adf-b417-42f1f998461e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ReleaseClient
+VAR_INPUT
+	bReleasePresent : BOOL;
+END_VAR
+
+VAR_OUTPUT
+	bReleaseAckOut : BOOL;
+	bLastHandshakeSuccesful : BOOL;
+	bMasterAbortedLastHandshake : BOOL;
+END_VAR
+
+VAR
+	fbReleasePresentEvent : R_TRIG;
+	fbReleaseGoneEvent : F_TRIG;
+	fbReleaseAckOutEvent : R_TRIG;
+	fbReleaseAckOutGoneEvent : F_TRIG;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbReleasePresentEvent(CLK:=bReleasePresent);
+fbReleaseAckOutEvent(CLK:=bReleaseAckOut);
+fbReleaseGoneEvent(CLK:=bReleasePresent);
+fbReleaseAckOutGoneEvent(CLK:=bReleaseAckOut);
+
+IF fbReleaseAckOutEvent.Q
+THEN
+	OnReleaseAckOut();
+END_IF
+
+IF fbReleasePresentEvent.Q
+THEN
+	OnReleasePresent();
+END_IF
+
+IF fbReleaseGoneEvent.Q
+THEN
+	OnReleaseGone();
+END_IF
+
+IF fbReleaseAckOutGoneEvent.Q
+THEN
+	OnHandshakeSuccessful();
+END_IF]]></ST>
+    </Implementation>
+    <Method Name="OnHandshakeSuccessful" Id="{1f77e4dc-7402-4680-8934-e633b7a0b4ce}">
+      <Declaration><![CDATA[METHOD OnHandshakeSuccessful : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[bLastHandshakeSuccesful := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnReleaseAckOut" Id="{a8ed3e2b-f776-46b1-82fb-0e25aaf9bcce}">
+      <Declaration><![CDATA[METHOD OnReleaseAckOut : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnReleaseGone" Id="{8085a4ea-cd51-4340-8eb0-6a9e5f9472ca}">
+      <Declaration><![CDATA[METHOD OnReleaseGone : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF bReleaseAckOut
+THEN
+	bReleaseAckOut := FALSE;
+ELSE
+	bMasterAbortedLastHandshake := TRUE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnReleasePresent" Id="{cbe62dc9-df54-48f1-b145-0ee665cc1735}">
+      <Declaration><![CDATA[METHOD  OnReleasePresent : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[bLastHandshakeSuccesful := FALSE;
+bMasterAbortedLastHandshake := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="ReleaseClient">
+      <LineId Id="20" Count="2" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="23" Count="7" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="35" Count="2" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="43" Count="2" />
+    </LineIds>
+    <LineIds Name="ReleaseClient.OnHandshakeSuccessful">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="ReleaseClient.OnReleaseAckOut">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="ReleaseClient.OnReleaseGone">
+      <LineId Id="6" Count="1" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="9" Count="1" />
+      <LineId Id="8" Count="0" />
+    </LineIds>
+    <LineIds Name="ReleaseClient.OnReleasePresent">
+      <LineId Id="5" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

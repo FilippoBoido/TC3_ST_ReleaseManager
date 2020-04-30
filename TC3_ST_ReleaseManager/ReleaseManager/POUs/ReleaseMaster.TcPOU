@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
+  <POU Name="ReleaseMaster" Id="{1bd31e51-9896-4100-ac8e-9b92f3d9fa3e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ReleaseMaster
+VAR_INPUT
+	bReleaseAckIn : BOOL;
+END_VAR
+
+VAR_OUTPUT
+	bSetRelease : BOOL;
+	bLastHandshakeSuccesful : BOOL;
+END_VAR
+
+
+VAR
+	fbReleaseAckInEvent : R_TRIG;
+	fbSetReleaseEvent : R_TRIG;
+	fbHandshakeSuccessfulEvent : R_TRIG;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbReleaseAckInEvent(CLK:=bReleaseAckIn);
+fbSetReleaseEvent(CLK:=bSetRelease);
+
+IF fbReleaseAckInEvent.Q
+THEN
+	OnReleaseAckIn();
+END_IF
+
+IF fbSetReleaseEvent.Q
+THEN
+	OnSetRelease();
+END_IF
+
+IF fbHandshakeSuccessfulEvent.Q
+THEN	
+	bLastHandshakeSuccesful := TRUE;
+END_IF
+	]]></ST>
+    </Implementation>
+    <Method Name="OnHandshakeSuccessful" Id="{551f9349-6943-4e72-9ef9-62337d0d7078}">
+      <Declaration><![CDATA[METHOD OnHandshakeSuccessful : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnReleaseAckIn" Id="{c21cbb55-3370-4b71-9b4c-c79118c49480}">
+      <Declaration><![CDATA[METHOD OnReleaseAckIn : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[bSetRelease := FALSE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnSetRelease" Id="{3b73cf21-3105-42af-b778-25ce8d80ca5f}">
+      <Declaration><![CDATA[METHOD OnSetRelease : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[bLastHandshakeSuccesful := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetReleaseClient" Id="{3c12957f-715b-46b2-a40b-55310a207da0}">
+      <Declaration><![CDATA[METHOD SetReleaseClient : BOOL
+VAR_IN_OUT
+	fbReleaseClient : ReleaseClient;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[bReleaseAckIn := fbReleaseClient.bReleaseAckOut;
+fbReleaseClient.bReleasePresent := bSetRelease;
+
+fbHandshakeSuccessfulEvent(CLK:=fbReleaseClient.bLastHandshakeSuccesful);
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="ReleaseMaster">
+      <LineId Id="9" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="29" Count="3" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="35" Count="2" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="44" Count="1" />
+    </LineIds>
+    <LineIds Name="ReleaseMaster.OnHandshakeSuccessful">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="ReleaseMaster.OnReleaseAckIn">
+      <LineId Id="8" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="ReleaseMaster.OnSetRelease">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="ReleaseMaster.SetReleaseClient">
+      <LineId Id="8" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

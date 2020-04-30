@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
+  <POU Name="MAIN" Id="{6d2efa3e-5b18-456f-af17-8d32ae7e29a2}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	fbTestModule1 : TestModule_1;
+	fbTestModule2 : TestModule_2;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbTestModule1();
+fbTestModule2();
+
+//fbTestModule1.fbNextStationReleaseClient.bReleasePresent := fbTestModule2.fbNextStationReleaseMaster.bSetRelease;
+//fbTestModule2.fbNextStationReleaseMaster.bReleaseAckIn := fbTestModule1.fbNextStationReleaseClient.bReleaseAckOut;
+
+fbTestModule2.fbNextStationReleaseMaster.SetReleaseClient(fbTestModule1.fbNextStationReleaseClient);]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="2" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="13" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
