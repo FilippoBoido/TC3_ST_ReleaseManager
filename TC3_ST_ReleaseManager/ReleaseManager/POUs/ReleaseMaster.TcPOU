@@ -34,7 +34,7 @@ END_IF
 
 IF fbHandshakeSuccessfulEvent.Q
 THEN	
-	bLastHandshakeSuccesful := TRUE;
+	OnHandshakeSuccessful();
 END_IF
 	]]></ST>
     </Implementation>
@@ -44,7 +44,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[bLastHandshakeSuccesful := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnReleaseAckIn" Id="{c21cbb55-3370-4b71-9b4c-c79118c49480}">
@@ -92,7 +92,7 @@ fbHandshakeSuccessfulEvent(CLK:=fbReleaseClient.bLastHandshakeSuccesful);
       <LineId Id="42" Count="0" />
       <LineId Id="41" Count="0" />
       <LineId Id="43" Count="0" />
-      <LineId Id="46" Count="0" />
+      <LineId Id="63" Count="0" />
       <LineId Id="44" Count="1" />
     </LineIds>
     <LineIds Name="ReleaseMaster.OnHandshakeSuccessful">

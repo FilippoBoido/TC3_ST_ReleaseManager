@@ -11,7 +11,9 @@ END_VAR
     <Implementation>
       <ST><![CDATA[fbTestModule1();
 fbTestModule2();
-
+fbTestModule3();
+fbTestModule4();
+fbTestModule5();
 //fbTestModule1.fbNextStationReleaseClient.bReleasePresent := fbTestModule2.fbNextStationReleaseMaster.bSetRelease;
 //fbTestModule2.fbNextStationReleaseMaster.bReleaseAckIn := fbTestModule1.fbNextStationReleaseClient.bReleaseAckOut;
 
@@ -23,6 +25,7 @@ fbTestModule4.fbNextStationReleaseHybrid.SetReleaseClient(fbTestModule5.fbNextSt
       <LineId Id="2" Count="0" />
       <LineId Id="8" Count="0" />
       <LineId Id="10" Count="0" />
+      <LineId Id="24" Count="1" />
       <LineId Id="9" Count="0" />
       <LineId Id="12" Count="0" />
       <LineId Id="14" Count="0" />

@@ -10,7 +10,7 @@
 		</System>
 		<Plc>
 			<Project GUID="{734A2AC4-D6A5-4664-9553-6F4D6938E286}" Name="ReleaseManager" PrjFilePath="ReleaseManager\ReleaseManager.plcproj" TmcFilePath="ReleaseManager\ReleaseManager.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="ReleaseManager\ReleaseManager.tmc">
 					<Name>ReleaseManager Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<TaskPouOids>

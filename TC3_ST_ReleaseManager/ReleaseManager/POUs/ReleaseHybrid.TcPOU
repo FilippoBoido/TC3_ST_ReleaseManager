@@ -8,7 +8,7 @@ END_VAR
 
 VAR_OUTPUT
 	bSetRelease : BOOL;
-	bLastHandshakeSuccesfulHybrid : BOOL;
+	bLastHybridHandshakeSuccesful : BOOL;
 END_VAR
 
 
@@ -36,17 +36,17 @@ END_IF
 
 IF fbHandshakeSuccessfulEvent.Q
 THEN	
-	bLastHandshakeSuccesful := TRUE;
+	OnHybridHandshakeSuccessful();
 END_IF
 	]]></ST>
     </Implementation>
-    <Method Name="OnHandshakeSuccessful" Id="{fd2496f1-8f28-4daf-a0ff-c614084e1ab2}">
-      <Declaration><![CDATA[METHOD OnHandshakeSuccessful : BOOL
+    <Method Name="OnHybridHandshakeSuccessful" Id="{fd2496f1-8f28-4daf-a0ff-c614084e1ab2}">
+      <Declaration><![CDATA[METHOD OnHybridHandshakeSuccessful : BOOL
 VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[bLastHybridHandshakeSuccesful := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="OnReleaseAckIn" Id="{bb7d6fda-b411-4a9f-9372-3c3c6858cebf}">
@@ -66,7 +66,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[bLastHandshakeSuccesfulHybrid := FALSE;]]></ST>
+        <ST><![CDATA[bLastHybridHandshakeSuccesful := FALSE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="SetReleaseClient" Id="{412d4f81-e219-4209-895c-285c49672eb8}">
@@ -86,10 +86,12 @@ fbHandshakeSuccessfulEvent(CLK:=fbReleaseClient.bLastHandshakeSuccesful);
     </Method>
     <LineIds Name="ReleaseHybrid">
       <LineId Id="42" Count="0" />
-      <LineId Id="10" Count="16" />
+      <LineId Id="10" Count="14" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="26" Count="0" />
       <LineId Id="9" Count="0" />
     </LineIds>
-    <LineIds Name="ReleaseHybrid.OnHandshakeSuccessful">
+    <LineIds Name="ReleaseHybrid.OnHybridHandshakeSuccessful">
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="ReleaseHybrid.OnReleaseAckIn">
